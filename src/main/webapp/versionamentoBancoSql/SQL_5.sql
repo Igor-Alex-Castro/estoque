@@ -1,0 +1,1 @@
+alter table EST_USUARIO add usu_genero varchar2(200) default 'masculino' not null
