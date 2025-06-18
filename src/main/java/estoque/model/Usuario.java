@@ -1,6 +1,8 @@
 package estoque.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Usuario {
@@ -28,6 +30,8 @@ public class Usuario {
 	private String numero;
 	
 	private String genero;
+	
+	private List<Telefone> telefones =  new ArrayList<Telefone>();
 	
 	
 	public String getGenero() {
@@ -196,6 +200,14 @@ public class Usuario {
 				+ usuarioStatus + ", usuarioDataCadastro=" + usuarioDataCadastro + ", usuarioDataUltAcesso="
 				+ usuarioDataUltAcesso + ", cep=" + cep + ", logradouro=" + logradouro + ", bairro=" + bairro
 				+ ", localidade=" + localidade + ", uf=" + uf + ", numero=" + numero + "]";
+	}
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
 	}
 	
 	

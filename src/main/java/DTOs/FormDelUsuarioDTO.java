@@ -5,14 +5,12 @@ import java.util.List;
 
 import estoque.model.Usuario;
 
-public class FormUsuarioDTO {
+public class FormDelUsuarioDTO {
 		String msg;
-		Usuario usuario;
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
-		public FormUsuarioDTO(String msg, Usuario usuario, List<Usuario>  usuarios) {
+		public FormDelUsuarioDTO(String msg, List<Usuario>  usuarios) {
 			this.msg = msg;
-			this.usuario = usuario;
 			this.usuarios = usuarios;
 		}
 	}

@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import DTOs.FormDelUsuarioDTO;
 import DTOs.FormUsuarioDTO;
 import estoque.dao.DaoUsuarioEst;
 import estoque.model.Usuario;
 
 
-@WebServlet(urlPatterns= { "/UsuarioServlets", "/estoque/UsuarioServlets"})
+@WebServlet(urlPatterns= { "/UsuarioServlets", "/estoque/pages/UsuarioServlets", "/pages/UsuarioServlets"})
 public class UsuarioServlets extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +44,7 @@ public class UsuarioServlets extends HttpServlet {
 				List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
 				request.setAttribute("listUsaurio", listUsaurio);
 					
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/usuario.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pages/usuario.jsp");
 				requestDispatcher.forward(request, response);
 			
 			
@@ -52,22 +53,34 @@ public class UsuarioServlets extends HttpServlet {
 				
 				daoUsuarioEst.excluirUsuario(id);
 				
+				List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
+				
 				Gson gson = new Gson();
+				
+				
+				
 				
 				Map<String, String> resposta = new HashMap<String, String>();
 				
-				resposta.put("msg", "Usuario deletado");
+				FormDelUsuarioDTO formDelUsuarioDTO = new FormDelUsuarioDTO("Usuario deletado", daoUsuarioEst.listUsuario());
 				
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(gson.toJson(resposta));
-				//return;
+				response.getWriter().write(gson.toJson(formDelUsuarioDTO));
+				
+			} else if(acao.equalsIgnoreCase("limpar") && !acao.isEmpty() && acao != null) {
+				List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
+				Gson gson = new Gson();
+				FormDelUsuarioDTO formDelUsuarioDTO = new FormDelUsuarioDTO("Form limpo", daoUsuarioEst.listUsuario());
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(gson.toJson(formDelUsuarioDTO));
 			}else {
 				
 				List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
 				request.setAttribute("listUsaurio", listUsaurio);
 					
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/usuario.jsp");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/pages/usuario.jsp");
 				requestDispatcher.forward(request, response);
 				
 			}
@@ -125,7 +138,10 @@ public class UsuarioServlets extends HttpServlet {
 				msg = "Usuario editado com sucesso";
 			}
 			
-			FormUsuarioDTO formUsuarioDTO = new FormUsuarioDTO(msg, usuario);
+			
+			List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
+			
+			FormUsuarioDTO formUsuarioDTO = new FormUsuarioDTO(msg, usuario, listUsaurio);
 			 
 			Gson gson = new Gson();
 			
@@ -136,7 +152,7 @@ public class UsuarioServlets extends HttpServlet {
 			
 		
 			
-			List<Usuario> listUsaurio = daoUsuarioEst.listUsuario();
+			
 		
 			
 		} catch (Exception e) {
